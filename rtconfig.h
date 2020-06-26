@@ -16,7 +16,13 @@
 #define RT_USING_IDLE_HOOK
 #define RT_IDLE_HOOK_LIST_SIZE 4
 #define IDLE_THREAD_STACK_SIZE 256
+#define RT_USING_TIMER_SOFT
+#define RT_TIMER_THREAD_PRIO 4
+#define RT_TIMER_THREAD_STACK_SIZE 512
 #define RT_DEBUG
+#define RT_DEBUG_COLOR
+#define RT_DEBUG_MODULE_CONFIG
+#define RT_DEBUG_MODULE 1
 
 /* Inter-Thread communication */
 
@@ -38,8 +44,9 @@
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 128
 #define RT_CONSOLE_DEVICE_NAME "uart1"
-#define RT_VER_NUM 0x40001
+#define RT_VER_NUM 0x40003
 #define ARCH_ARM
+#define RT_USING_CPU_FFS
 #define ARCH_ARM_CORTEX_M
 #define ARCH_ARM_CORTEX_M3
 
@@ -80,25 +87,24 @@
 #define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_PIN
-
-/* Using WiFi */
-
+#define RT_USING_PWM
 
 /* Using USB */
 
 
 /* POSIX layer and C standard library */
 
+#define RT_LIBC_USING_TIME
 
 /* Network */
 
 /* Socket abstraction layer */
 
 
+/* Network interface device */
+
+
 /* light weight TCP/IP stack */
-
-
-/* Modbus master and slave stack */
 
 
 /* AT commands */
@@ -147,12 +153,7 @@
 /* miscellaneous packages */
 
 
-/* sample package */
-
 /* samples: kernel and components samples */
-
-
-/* example package: hello */
 
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F1
@@ -171,6 +172,12 @@
 #define BSP_USING_UART
 #define BSP_USING_UART1
 #define BSP_UART1_RX_USING_DMA
+#define BSP_USING_UART2
+#define BSP_UART2_RX_USING_DMA
+#define BSP_USING_PWM
+#define BSP_USING_PWM3
+#define BSP_USING_PWM3_CH1
+#define BSP_USING_PWM3_CH2
 
 /* Board extended module Drivers */
 

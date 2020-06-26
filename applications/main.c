@@ -12,8 +12,13 @@
 #include <rtdevice.h>
 #include <board.h>
 
+#define LOG_TAG             "main"
+#include <drv_log.h>
+
 /* defined the LED0 pin: PC13 */
 #define LED0_PIN    GET_PIN(A, 1)
+
+
 
 int main(void)
 {
@@ -21,7 +26,7 @@ int main(void)
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
 
-    while (count++)
+    while (count++) 
     {
         rt_pin_write(LED0_PIN, PIN_HIGH);
         rt_thread_mdelay(500);
@@ -31,3 +36,6 @@ int main(void)
 
     return RT_EOK;
 }
+
+
+
