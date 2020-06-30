@@ -393,9 +393,14 @@
               <FilePath>.\applications\uart.c</FilePath>
             </File>
             <File>
-              <FileName>pwm.c</FileName>
+              <FileName>stepper.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\pwm.c</FilePath>
+              <FilePath>.\applications\stepper.c</FilePath>
+            </File>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\control.c</FilePath>
             </File>
           </Files>
         </Group>

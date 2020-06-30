@@ -978,10 +978,10 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
   */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    struct stm32_uart *uart;
-    RT_ASSERT(huart != NULL);
-    uart = (struct stm32_uart *)huart;
-    dma_isr(&uart->serial);
+    //struct stm32_uart *uart;
+    //RT_ASSERT(huart != NULL);
+    //uart = (struct stm32_uart *)huart;
+   // dma_isr(&uart->serial);
 }
 
 /**

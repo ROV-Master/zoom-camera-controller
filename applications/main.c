@@ -18,7 +18,7 @@
 /* defined the LED0 pin: PC13 */
 #define LED0_PIN    GET_PIN(A, 1)
 
-
+extern rt_device_t camera_uart_device;
 
 int main(void)
 {
@@ -32,6 +32,8 @@ int main(void)
         rt_thread_mdelay(500);
         rt_pin_write(LED0_PIN, PIN_LOW);
         rt_thread_mdelay(500);
+			
+				//rt_device_write(camera_uart_device, 0, &count, 1);
     }
 
     return RT_EOK;
