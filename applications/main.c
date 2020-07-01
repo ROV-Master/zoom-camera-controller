@@ -1,11 +1,5 @@
-/*
- * Copyright (c) 2006-2018, RT-Thread Development Team
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Change Logs:
- * Date           Author       Notes
- * 2019-03-08     obito0   first version
+/**
+ * @desc: 系统状态指示灯
  */
 
 #include <rtthread.h>
@@ -18,26 +12,20 @@
 /* defined the LED0 pin: PC13 */
 #define LED0_PIN    GET_PIN(A, 1)
 
-extern rt_device_t camera_uart_device;
-
 int main(void)
 {
-    int count = 1;
-    /* set LED0 pin mode to output */
-    rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
+  int count = 1;
+  /* set LED0 pin mode to output */
+  rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
 
-    while (count++) 
-    {
-        rt_pin_write(LED0_PIN, PIN_HIGH);
-        rt_thread_mdelay(500);
-        rt_pin_write(LED0_PIN, PIN_LOW);
-        rt_thread_mdelay(500);
-			
-				//rt_device_write(camera_uart_device, 0, &count, 1);
-    }
+	
+	while (count++) 
+	{
+		rt_pin_write(LED0_PIN, PIN_HIGH);
+		rt_thread_mdelay(500);
+		rt_pin_write(LED0_PIN, PIN_LOW);
+		rt_thread_mdelay(500);
+	}
 
-    return RT_EOK;
+	return RT_EOK;
 }
-
-
-

@@ -126,6 +126,6 @@ int rt_wdt_init(void)
     LOG_D("wdt device register success.");
     return RT_EOK;
 }
-INIT_BOARD_EXPORT(rt_wdt_init);
+INIT_DEVICE_EXPORT(rt_wdt_init);
 
 #endif /* RT_USING_WDT */

@@ -8,11 +8,8 @@
 #include <drv_log.h>
 #include <stdlib.h>
 
-
 static rt_uint8_t forward_table[4] = {0x09,0x0A,0x06,0x05};  //4拍正转表 Forward
 static rt_uint8_t reverse_table[4] = {0x05,0x06,0x0A,0x09};  //4拍反转表 Reverse
-
-
 
 /* ZOOM步进电机初始定义 名称、引脚等 */
 stepper_t zoomStepper = { // 拉远拉近
@@ -147,5 +144,4 @@ exit:
 
 }
 MSH_CMD_EXPORT(stepper, stepper_set <dir> <angle>);
-
 

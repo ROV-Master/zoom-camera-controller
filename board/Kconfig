@@ -98,6 +98,17 @@ menu "On-chip Peripheral Drivers"
                 default n
 
         endif
+		
+     menuconfig BSP_USING_WDT
+        bool "Enable WDT"
+        default n
+        select RT_USING_WDT
+        if BSP_USING_WDT
+            config BSP_USING_WDT
+                bool "Enable WDT"
+                default n
+
+        endif
     source "libraries/HAL_Drivers/Kconfig"
     
 endmenu

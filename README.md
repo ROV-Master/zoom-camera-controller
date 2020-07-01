@@ -15,9 +15,9 @@
 
 
 
-![这里添加图片描述](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/focus_camera_sequence_of_excitation.png)
 
-## 2.使用说明
+
+## 2.说明
 ![变焦镜头步进电机励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/focus_camera_sequence_of_excitation.png "变焦镜头步进电机励磁序列")
 
 

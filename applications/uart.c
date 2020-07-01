@@ -82,14 +82,17 @@ static int uart2_init(void)
 }
 INIT_APP_EXPORT(uart2_init);
 
-
-rt_uint8_t rxBuffer[10] = {0}; // 数据包
-rt_uint8_t rxCheck = 0;        // 尾校验字
-rt_uint8_t rxCount = 0;        // 接收计数
+/**
+ * @brief  控制命令解析
+ * @param  data 数据字， *cmd控制命令结构体指针
+ */
 void control_data_analysis(rt_uint8_t data, cmd_t *cmd) //控制数据解析
 {
 	static rt_uint8_t i;
-
+	static rt_uint8_t rxBuffer[10] = {0}; // 数据包
+	static rt_uint8_t rxCheck = 0;        // 尾校验字
+	static rt_uint8_t rxCount = 0;        // 接收计数
+	
 	rxBuffer[rxCount++] = data; // 将收到的数据存入缓冲区中
 	if(rxCount > 9)
 		rxCount = 0;
