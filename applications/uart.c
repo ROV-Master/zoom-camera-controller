@@ -14,6 +14,10 @@
 /* 控制数据 结构体 */
 cmd_t cmd_data;
 
+/* 上层控制器发送的变焦控制命令，如果命令数据包正常，则返回"ok"
+ * 也可表示控制器 检测是否存在变焦组件，因此收到正常的数据包即返回"ok"
+*/
+rt_int8_t send_buff[2] = "ok";
 
 
 /* 用于接收消息的信号量 */
@@ -41,13 +45,11 @@ static void serial_thread_entry(void *parameter)
             rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
         }
 				control_data_analysis(ch, &cmd_data);
-
     }
 }
 
 static int uart2_init(void)
 {
-		char str[] = "hello RT-Thread!\r\n";
     /* 查找系统中的串口设备 */
     camera_uart_device = rt_device_find(CONTROL_UART_NAME);
     if (!camera_uart_device)
@@ -56,9 +58,8 @@ static int uart2_init(void)
         return RT_ERROR;
     }
 		else
-		{
 				LOG_I("%s init success", camera_uart_device);
-		}
+
 
 		/* 初始化信号量 */
     rt_sem_init(&rx_sem, "rx_sem", 0, RT_IPC_FLAG_FIFO);
@@ -66,9 +67,9 @@ static int uart2_init(void)
     rt_device_open(camera_uart_device, RT_DEVICE_FLAG_INT_RX);
     /* 设置接收回调函数 */
     rt_device_set_rx_indicate(camera_uart_device, uart_input);
-
-		   /* 发送字符串 */
-    rt_device_write(camera_uart_device, 0, str, (sizeof(str) - 1));
+		
+		/* 开机发送该数据包，表示变焦组件正常 */
+    rt_device_write(camera_uart_device, 0, send_buff, (sizeof(send_buff)));
     /* 创建 serial 线程 */
     rt_thread_t thread = rt_thread_create("uart", serial_thread_entry, RT_NULL, 1024, 10, 10);
     /* 创建成功则启动线程 */
@@ -115,6 +116,8 @@ void control_data_analysis(rt_uint8_t data, cmd_t *cmd) //控制数据解析
 		
 		cmd->focus_angle = STEP_ANGLE; // 每次转动STEP_ANGLE°
 		cmd->zoom_angle  = STEP_ANGLE;
+		/* 数据包正常，返回"ok" */
+		rt_device_write(camera_uart_device, 0, send_buff, (sizeof(send_buff)));
 	}	
 
 	rxCount = 0; // 清空缓存区

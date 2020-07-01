@@ -11,14 +11,24 @@
 
 ## 1.简介
 
->  主机通过 `UART` 下发命令，控制镜头上的两个4相步进电机实现聚焦（focus）与变焦（zoom）。
+>  主机通过 `UART` 下发命令，控制镜头上的两个4相步进电机实现聚焦（focus）与变焦（zoom），与程序相对应的硬件存放与[变焦镜头控制器](https://github.com/ROV-Master/rovmaster-hardware/tree/master/5.ROV Master Zoom Controller V2.0)。
 
 
+
+![这里添加图片描述](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/focus_camera_sequence_of_excitation.png)
 
 ## 2.使用说明
 ![变焦镜头步进电机励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/focus_camera_sequence_of_excitation.png "变焦镜头步进电机励磁序列")
 
 
+
+|   步进    |  1   |  22  |  33  |  4   |
+| :-------: | :--: | :--: | :--: | :--: |
+|    A+     |  1   |  1   |  0   |  0   |
+|    A-     |  0   |  0   |  1   |  1   |
+|    B+     |  0   |  1   |  1   |  0   |
+|    B-     |  1   |  0   |  0   |  1   |
+| 对应HEX值 | 0x09 | 0x0A | 0x06 | 0x05 |
 
 该步进电机励磁序列节拍表如上图，由此可以定义出其 **4拍正反转表对应的数组：**
 
@@ -30,7 +40,6 @@ static rt_uint8_t R_Rotation[4] = {0x05,0x06,0x0A,0x09} ;  // 4节拍反转表 R
 因此其对应的控制程序为：
 
 ```c
-
 /**
  * @brief  根据节拍控制字选择输出引脚
  * @param  *stepper 步进电机结构体指针，beat 节拍控制字
@@ -63,16 +72,11 @@ void stepper_set(stepper_t *stepper, rt_uint8_t *beat_table, rt_int16_t *angle)
 	}
 	stepper_stop(stepper); // 步进电机停转
 }
-
 ```
 
 
 
-### 2.1 接线说明
-
-
-
-### 2.2 协议说明
+### 2.1 协议说明
 
 - [x] 以下为ROV发送给变焦摄像头设备的数据包定义(16进制)：
 
@@ -87,8 +91,15 @@ void stepper_set(stepper_t *stepper, rt_uint8_t *beat_table, rt_int16_t *angle)
 ---
 
 - 变焦指令为`0x01`时，为变焦（zoom）拉近
-
 - 变焦指令为`0x02`时，为变焦（zoom）拉远
+
+> 每当`变焦控制器`收到正确数据包时则返回"ok"（0x6F、0x6B），可用于检测`变焦控制器`是否存在、是否正常，也可以检测下发给`变焦控制器`的命令是否执行。
+
+### 2.2 调试说明
+
+> 发送上述数据包，0xAA 0x55 0x02 0x01 0x01 0x03，可在逻辑分析仪上获取以下波形，符合该4相 步进电机的励磁序列，以下波形完成一个步进（即完成一个励磁序列）用时4ms，即单步为1ms。
+
+![逻辑分析仪上测试得到的励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_sequence_on_logic analyzer.png "逻辑分析仪上测试得到的励磁序列")
 
 
 ## 3. 进度
@@ -98,7 +109,7 @@ void stepper_set(stepper_t *stepper, rt_uint8_t *beat_table, rt_int16_t *angle)
 	- [ ] Watch-Dog :dog2:
 
 - 应用层
-	- [ ] 驱动控制程序 :wrench:
+	- [x] 驱动控制程序 :wrench:
 	- [x] UART 控制协议 :pencil:
 	- [x] Msh 调试 :dizzy:
 	
