@@ -13,10 +13,6 @@
 
 >  主机通过 `UART` 下发命令，控制镜头上的两个4相步进电机实现聚焦（focus）与变焦（zoom），与程序相对应的硬件存放与[变焦镜头控制器](https://github.com/ROV-Master/rovmaster-hardware/tree/master/5.ROV Master Zoom Controller V2.0)。
 
-
-
-
-
 ## 2.说明
 ![变焦镜头步进电机励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/focus_camera_sequence_of_excitation.png "变焦镜头步进电机励磁序列")
 
@@ -93,25 +89,41 @@ void stepper_set(stepper_t *stepper, rt_uint8_t *beat_table, rt_int16_t *angle)
 - 变焦指令为`0x01`时，为变焦（zoom）拉近
 - 变焦指令为`0x02`时，为变焦（zoom）拉远
 
-> 每当`变焦控制器`收到正确数据包时则返回"ok"（0x6F、0x6B），可用于检测`变焦控制器`是否存在、是否正常，也可以检测下发给`变焦控制器`的命令是否执行。
+> 每当`变焦控制器`收到正确数据包时则返回 "ok" （0x6F、0x6B），可用于检测`变焦控制器`是否存在、是否正常，也可以检测下发给`变焦控制器`的命令是否执行。
 
 ### 2.2 调试说明
 
-> 发送上述数据包，0xAA 0x55 0x02 0x01 0x01 0x03，可在逻辑分析仪上获取以下波形，符合该4相 步进电机的励磁序列，以下波形完成一个步进（即完成一个励磁序列）用时4ms，即单步为1ms。
+> 向UART2口发送上述数据包，（eg. `0xAA 0x55 0x02 0x01 0x01 0x03`），可在逻辑分析仪上获取以下波形，符合该4相 步进电机的励磁序列，以下波形完成一个步进（即完成一个励磁序列）用时4ms，即单步为1ms。
 
 ![逻辑分析仪上测试得到的励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_sequence_on_logic analyzer.png "逻辑分析仪上测试得到的励磁序列")
 
 
+
+- MSH调试
+
+  > stepper <dir> <angle>
+  >
+  > 该命令会同时设置两个步进电机相同的**方向**<dir>与**角度**<angle>
+  >
+  > <dir>：0停止，1逆时针，2顺时针
+  >
+  > <angle>：角度范围为[0，360]。
+
+  ![这里添加图片描述](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_msh.png)
+
+  
+
+
 ## 3. 进度
 - 驱动层
-	- [x] Stepper​ :motorcycle:
-	- [x] UART
-	- [ ] Watch-Dog :dog2:
+	- [x] :motorcycle: Stepper 
+	- [x] :link: ​UART 
+	- [x] :dog2: ​Watch-Dog 
 
 - 应用层
-	- [x] 驱动控制程序 :wrench:
-	- [x] UART 控制协议 :pencil:
-	- [x] Msh 调试 :dizzy:
+	- [x] :wrench: ​驱动控制程序 
+	- [x] :pencil: ​UART 控制协议 
+	- [x] :dizzy: ​Msh 调试 
 	
 ## 4.参考
 
