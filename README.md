@@ -70,8 +70,6 @@ void stepper_set(stepper_t *stepper, rt_uint8_t *beat_table, rt_int16_t *angle)
 }
 ```
 
-
-
 ### 2.1 协议说明
 
 - [x] 以下为ROV发送给变焦摄像头设备的数据包定义(16进制)：
@@ -95,25 +93,18 @@ void stepper_set(stepper_t *stepper, rt_uint8_t *beat_table, rt_int16_t *angle)
 
 > 向UART2口发送上述数据包，（eg. `0xAA 0x55 0x02 0x01 0x01 0x03`），可在逻辑分析仪上获取以下波形，符合该4相 步进电机的励磁序列，以下波形完成一个步进（即完成一个励磁序列）用时4ms，即单步为1ms。
 
-![逻辑分析仪上测试得到的励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_sequence_on_logic analyzer.png "逻辑分析仪上测试得到的励磁序列")
-
+![逻辑分析仪上测试得到的励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_sequence_on_logic_analyzer.png "逻辑分析仪上测试得到的励磁序列")
 
 
 - MSH调试
+> stepper <dir> <angle>
+> 该命令会同时设置两个步进电机相同的**方向**<dir>与**角度**<angle>
+> <dir>：0停止，1逆时针，2顺时针
+> <angle>：角度范围为[0，360]
 
-  > stepper <dir> <angle>
-  >
-  > 该命令会同时设置两个步进电机相同的**方向**<dir>与**角度**<angle>
-  >
-  > <dir>：0停止，1逆时针，2顺时针
-  >
-  > <angle>：角度范围为[0，360]。
-
-  ![这里添加图片描述](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_msh.png)
-
+![msh调试](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/stepper_msh.png "msh调试")
   
-
-
+  
 ## 3. 进度
 - 驱动层
 	- [x] :motorcycle: Stepper 
