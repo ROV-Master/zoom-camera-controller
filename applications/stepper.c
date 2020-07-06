@@ -15,20 +15,20 @@ static rt_uint8_t reverse_table[4] = {0x05,0x06,0x0A,0x09};  //4拍反转表 Reverse
 stepper_t zoomStepper = { // 拉远拉近
 	.name   = "zoom",
 
-	.Ap_pin = GET_PIN(B, 3), /* A+ */
-	.Am_pin = GET_PIN(B, 4), /* A- */
-	.Bp_pin = GET_PIN(B, 5), /* B+ */
-	.Bm_pin = GET_PIN(B, 6), /* B- */
+	.Ap_pin = GET_PIN(B, 6), /* A+ */
+	.Am_pin = GET_PIN(B, 5), /* A- */
+	.Bp_pin = GET_PIN(B, 4), /* B+ */
+	.Bm_pin = GET_PIN(B, 3), /* B- */
 };
 
 /* FOCUS步进电机初始定义 名称、引脚等 */
 stepper_t focusStepper = { // 放大缩小
 	.name   = "focus",
 
-	.Ap_pin = GET_PIN(B, 7),  /* A+ */
-	.Am_pin = GET_PIN(B, 8),  /* A- */
-	.Bp_pin = GET_PIN(B, 9),  /* B+ */
-	.Bm_pin = GET_PIN(B, 10), /* B- */
+	.Ap_pin = GET_PIN(B, 10),  /* A+ */
+	.Am_pin = GET_PIN(B, 9),  /* A- */
+	.Bp_pin = GET_PIN(B, 8),  /* B+ */
+	.Bm_pin = GET_PIN(B, 7), /* B- */
 };
 
 /**

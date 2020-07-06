@@ -9,23 +9,20 @@
 #define LOG_TAG             "main"
 #include <drv_log.h>
 
-/* defined the LED0 pin: PC13 */
+/* defined the LED0 pin: PA1 */
 #define LED0_PIN    GET_PIN(A, 1)
 
+// main函数中仅闪烁系统指示灯
 int main(void)
 {
-  int count = 1;
   /* set LED0 pin mode to output */
   rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
 
-	
-	while (count++) 
+	while (1) 
 	{
 		rt_pin_write(LED0_PIN, PIN_HIGH);
 		rt_thread_mdelay(500);
 		rt_pin_write(LED0_PIN, PIN_LOW);
 		rt_thread_mdelay(500);
 	}
-
-	return RT_EOK;
 }
