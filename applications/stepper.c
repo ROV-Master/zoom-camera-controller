@@ -25,10 +25,10 @@ stepper_t zoomStepper = { // 拉远拉近
 stepper_t focusStepper = { // 放大缩小
 	.name   = "focus",
 
-	.Ap_pin = GET_PIN(B, 10),  /* A+ */
-	.Am_pin = GET_PIN(B, 9),  /* A- */
-	.Bp_pin = GET_PIN(B, 8),  /* B+ */
-	.Bm_pin = GET_PIN(B, 7), /* B- */
+	.Ap_pin = GET_PIN(B, 10), /* A+ */
+	.Am_pin = GET_PIN(B,  9), /* A- */
+	.Bp_pin = GET_PIN(B,  8), /* B+ */
+	.Bm_pin = GET_PIN(B,  7), /* B- */
 };
 
 /**

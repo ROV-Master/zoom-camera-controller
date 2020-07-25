@@ -11,7 +11,7 @@
 
 ## 1.简介
 
->  主机通过 `UART` 下发命令，控制镜头上的两个4相步进电机实现聚焦（focus）与变焦（zoom），与程序相对应的硬件存放与[变焦镜头控制器](https://github.com/ROV-Master/rovmaster-hardware/tree/master/5.ROV%20Master%20Zoom%20Controller%20V2.0)。
+>  主机通过 `UART` 下发命令，控制镜头上的两个4相步进电机实现聚焦（focus）与变焦（zoom），与程序相对应的硬件存放于[变焦镜头控制器](https://github.com/ROV-Master/rovmaster-hardware/tree/master/5.ROV%20Master%20Zoom%20Controller%20V2.0)。
 
 ## 2.说明
 ![变焦镜头步进电机励磁序列](https://zengwangfa.oss-cn-shanghai.aliyuncs.com/rov/focus_camera_sequence_of_excitation.png "变焦镜头步进电机励磁序列")
@@ -43,9 +43,9 @@ static rt_uint8_t R_Rotation[4] = {0x05,0x06,0x0A,0x09} ;  // 4节拍反转表 R
 void selete_pin(rt_uint32_t pin, rt_uint8_t beat)
 {
 	if(beat)
-		rt_pin_write(pin, PIN_HIGH);
-	else
-		rt_pin_write(pin, PIN_LOW);
+        rt_pin_write(pin, PIN_HIGH);
+    else
+        rt_pin_write(pin, PIN_LOW);
 }
 
 /**
