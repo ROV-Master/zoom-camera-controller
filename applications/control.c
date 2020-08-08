@@ -19,8 +19,8 @@ static void control_thread_entry(void* parameter)
   
 	while (1)
 	{
-		stepper_control(&focusStepper, &cmd_data.zoom_dir, &cmd_data.zoom_angle);
-		stepper_control(&zoomStepper, &cmd_data.focus_dir, &cmd_data.focus_angle);
+		stepper_control(&focusStepper);
+		stepper_control(&zoomStepper);
 		
 		rt_thread_mdelay(10); // 此处挂起线程，以防卡死其他线程
 	}

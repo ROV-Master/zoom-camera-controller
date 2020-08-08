@@ -4,6 +4,7 @@
 
 #include "uart.h"
 #include "control.h"
+#include "stepper.h"
 #include <rtdevice.h>
 
 #define LOG_TAG             "uart"
@@ -11,8 +12,7 @@
 
 #define CONTROL_UART_NAME   "uart2"
 
-/* 控制数据 结构体 */
-cmd_t cmd_data;
+static void control_data_analysis(rt_uint8_t data);
 
 /* 上层控制器发送的变焦控制命令，如果命令数据包正常，则返回"ok"字符串
  * 也可表示控制器 检测是否存在变焦组件，因此收到正常的数据包即返回"ok"字符串
@@ -43,7 +43,7 @@ static void serial_thread_entry(void *parameter)
 			/* 阻塞等待接收信号量，等到信号量后再次读取数据 */
 			rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
 		}
-		control_data_analysis(ch, &cmd_data);
+		control_data_analysis(ch);
 	}
 }
 
@@ -78,11 +78,12 @@ static int uart2_init(void)
 }
 INIT_APP_EXPORT(uart2_init);
 
+
 /**
  * @brief  控制命令解析
  * @param  data 数据字， *cmd控制命令结构体指针
  */
-void control_data_analysis(rt_uint8_t data, cmd_t *cmd) //控制数据解析
+static void control_data_analysis(rt_uint8_t data) //控制数据解析
 {
 	static rt_uint8_t i;
 	static rt_uint8_t rxBuffer[10] = {0}; // 数据包
@@ -109,12 +110,12 @@ void control_data_analysis(rt_uint8_t data, cmd_t *cmd) //控制数据解析
 	
 	if (rxCheck == rxBuffer[CONTROL_PACKET_LENGTH - 1]) // 判断数据包校验是否正确
 	{
-
-		cmd->zoom_dir  = (stepper_dir_e)rxBuffer[3];
-		cmd->focus_dir = (stepper_dir_e)rxBuffer[4];
+		/* 设置动作或改参数 */
+		set_stepper_params(&focusStepper, rxBuffer[3]);
+		set_stepper_params(&zoomStepper,  rxBuffer[4]);
 		
-		cmd->focus_angle = STEP_ANGLE; // 每次转动STEP_ANGLE°
-		cmd->zoom_angle  = STEP_ANGLE;
+		/* 测试:打印步进角是否设定成功 */
+		// rt_kprintf("focus fix_angle  %d, zoom->fix_angle %d\n", focusStepper.fix_angle ,zoomStepper.fix_angle );
 		/* 数据包正常，返回"ok" */
 		rt_device_write(camera_uart_device, 0, ok_str, (sizeof(ok_str)));
 	}	
